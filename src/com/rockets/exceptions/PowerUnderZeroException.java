@@ -1,4 +1,4 @@
-package com.rockets.domain;
+package com.rockets.exceptions;
 
 
 public class PowerUnderZeroException extends Exception{

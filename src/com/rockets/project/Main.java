@@ -1,6 +1,9 @@
 package com.rockets.project;
 
 import com.rockets.domain.*;
+import com.rockets.exceptions.PowerNotReacheableException;
+import com.rockets.exceptions.PowerOverLimitException;
+import com.rockets.exceptions.PowerUnderZeroException;
 import com.rockets.application.*;
 
 import java.util.ArrayList;
@@ -33,12 +36,12 @@ public class Main {
 		threadRocket1.start();	
 		
 		//Adding optional join() to execute first runnable and then the second.
-		/*try {
+		try {
 			threadRocket1.join();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 		
 		//Creating runnable for second rocket.		
 		Runnable runnableRocket2 = new ChangeThrustersPowers(1);		
@@ -52,6 +55,7 @@ static class ChangeThrustersPowers implements Runnable {
 		public ChangeThrustersPowers (int rocket) {
 			this.rocket = rocket;
 		}
+		
 		// Creating the run method to start the random power change.
 		@Override
 		public void run() {
@@ -71,14 +75,22 @@ static class ChangeThrustersPowers implements Runnable {
 				} else {
 					action = "brake";
 				}
-				System.out.println("THREAD: " + (tries + 1) + " Rocket " + rocket 
-						+ "\nRocket: " + rocket + " Thruster: " + randomThruster 
-						+ " Action: " + action);
+				System.out.println("\nTHREAD: " + (tries + 1) + " - Rocket " + rocket 
+						+ " - Thruster: " + randomThruster + " - Action: " + action);
+				//Starting power change.
 				try {
 					rCreator.changePower(rocket, randomThruster, action);
-				} catch (PowerOverLimitException | PowerUnderZeroException e) {
+				} catch (PowerOverLimitException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}				
+				} catch (PowerUnderZeroException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (PowerNotReacheableException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+							
 				System.out.println(rCreator.getRockets());
 				tries++;
 			}					
