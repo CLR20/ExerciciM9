@@ -21,7 +21,7 @@ public class Rockets {
 	int neededPower;
 		
 	public Rockets (String code, List<Integer> maxPowers) {		
-		rocketCode = code;				
+		rocketCode = code ;				
 		List<Integer> maxPowersList = maxPowers;
 		thrustersTotal = maxPowersList.size();	
 		// Setting maximum power for each thruster in a Hashmap.
@@ -47,7 +47,6 @@ public class Rockets {
 	
 	// Changing actual power with given random numbers.
 	public void changeActualPower(int thruster, String action) throws PowerOverLimitException, PowerUnderZeroException, PowerNotReacheableException {
-		//int thisThruster = thruster;
 		int actual = setActual.get(thruster);
 		if (action.equals("accelerate")) {
 			actual += 10;
@@ -88,7 +87,6 @@ public class Rockets {
 		if (wantedSpeed > actualSpeed) {
 			neededPower = ((int)Math.pow(wantedSpeed - actualSpeed, 2)) / thrustersTotal;	
 			for (int i = 1; i < setMax.size() + 1; i++) {
-				int newPower = setActual.get(i);
 				int maxPower = setMax.get(i);
 				try {
 					checkMaxPower(maxPower, neededPower);
@@ -129,7 +127,7 @@ public class Rockets {
 	
 	@Override
 	public String toString () {
-		return "\n|Code: " + rocketCode + "\n\tTotal thrusters: " + thrustersTotal 
+		return "\n|Code: " + rocketCode + 1 + "\n\tTotal thrusters: " + thrustersTotal 
 				+ "\n\tThrusters maximum powers:  " + setMax 
 				+ "\n\tThrusters actual powers:  " + oldPowers
 				+ "\n\tWanted speed: " + wantedSpeed 

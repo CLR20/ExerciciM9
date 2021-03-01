@@ -1,38 +1,31 @@
 package com.rockets.application;
 
-import com.rockets.domain.*;
+import java.util.Random;
+
 import com.rockets.exceptions.PowerNotReacheableException;
 import com.rockets.exceptions.PowerOverLimitException;
 import com.rockets.exceptions.PowerUnderZeroException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+public class CastingData implements Runnable {
+	int tries = 0;
+	int rocket;
+	RocketCreator rCreator;
+	
+	public CastingData (int r)  {
+		rocket = r;
+	}
+	
+	@Override
+	public void run() {		
+		rCreator = new RocketCreator();
 
-public class RocketCreator {
-	
-	private static Rockets rocket;
-	public static List <Rockets> rockets = new ArrayList<Rockets>();
-	
-	public RocketCreator () {		
-	}
-	
-	public void CreateRocket (String code, List<Integer> maxPowers) {
-		rocket = new Rockets(code, maxPowers);	
-		rockets.add(rocket);
-		rocket.setActualPower();
-	}
-	
-	//Randomizing the election of data for thruster's power changing.
-/*	public static void castingData (int r)  {
-		int tries = 0;
-		int rocket = r;
 		if (rocket == 0) {
 				System.out.println("\nSTARTING POWER CHANGES FOR ROCKET 1");
-		} else {
+		} else if (rocket == 1) {
 			System.out.println("\nSTARTING POWER CHANGES FOR ROCKET 2");
 		}
-		while (tries < 200) {
+		int i=0;
+		while (i == 0) {
 			Random rd = new Random();
 			int randomThruster;
 			if (rocket == 0) {
@@ -51,7 +44,7 @@ public class RocketCreator {
 					+ " - Thruster: " + randomThruster + " - Action: " + action1);
 			//Starting power change.
 			try {
-				changePower(rocket, randomThruster, action1);
+				RocketCreator.changePower(rocket, randomThruster, action1);
 			} catch (PowerOverLimitException e) {
 				e.printStackTrace();
 			} catch (PowerUnderZeroException e) {
@@ -61,19 +54,15 @@ public class RocketCreator {
 			}
 						
 			//System.out.println(rCreator.getRockets());
-			System.out.println(getRockets());
+			System.out.println(RocketCreator.getRockets());
 			tries++;
+			try {
+				Thread.sleep(800);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-	}*/
-	
-	// Calling method to change actual power with given random numbers.
-	public static void changePower(int rocketNumber, int thruster, String action) throws PowerOverLimitException, PowerUnderZeroException, PowerNotReacheableException {
-		rockets.get(rocketNumber).changeActualPower(thruster, action);
-		//rocket.setSpeed();
 	}
-	
-	public static String getRockets() {
-		return "ROCKETS: " + rockets;
-	}		
-	
+
 }
